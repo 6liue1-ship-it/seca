@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>خطة مشروع EventLink</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#0F4A54; --teal-dark:#0A3038; --teal-light:#E4EEF0;
+    --coral:#FF6B4E; --coral-deep:#E85539; --coral-light:#FFEAE4;
+    --sand:#FAF6EC; --card:#FFFFFF;
+    --green:#2E8B63; --green-bg:#E7F4EC;
+    --amber:#D98A2B; --amber-bg:#FBEEDC;
+    --red:#D9483A; --red-bg:#FBEAE8;
+    --ink:#12262A; --ink-soft:#5B6E71; --line:#E7E1D3;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--sand);color:var(--ink);font-family:'Tajawal',sans-serif;line-height:1.7;}
+  h1,h2,h3{font-family:'Tajawal',sans-serif;margin:0;}
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px;}
+  a{color:inherit;text-decoration:none;}
+
+  /* NAV */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(250,246,236,0.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .nav-inner{max-width:980px;margin:0 auto;display:flex;gap:6px;overflow-x:auto;padding:12px 20px;scrollbar-width:none;}
+  .nav-inner::-webkit-scrollbar{display:none;}
+  .nav-pill{flex-shrink:0;font-size:12.5px;font-weight:700;padding:8px 14px;border-radius:999px;background:var(--card);border:1px solid var(--line);color:var(--ink-soft);cursor:pointer;transition:.2s;}
+  .nav-pill.active{background:var(--teal);color:#fff;border-color:var(--teal);}
+
+  /* HERO */
+  .hero{background:linear-gradient(160deg, var(--teal), var(--teal-dark));color:#fff;padding:56px 20px 64px;text-align:center;position:relative;overflow:hidden;}
+  .hero::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 20%, rgba(255,107,78,0.25), transparent 55%);}
+  .hero h1{font-size:34px;font-weight:900;position:relative;}
+  .hero p{font-size:15px;opacity:.85;max-width:560px;margin:14px auto 0;position:relative;}
+  .badge-row{display:flex;gap:10px;justify-content:center;margin-top:22px;flex-wrap:wrap;position:relative;}
+  .badge{background:rgba(255,255,255,0.14);border:1px solid rgba(255,255,255,0.25);border-radius:999px;padding:7px 16px;font-size:12.5px;font-weight:700;}
+
+  section{padding:52px 0;border-bottom:1px dashed var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .kicker{display:inline-flex;align-items:center;gap:6px;background:var(--coral-light);color:var(--coral-deep);font-size:12px;font-weight:800;padding:5px 12px;border-radius:999px;margin-bottom:12px;}
+  .sec-title{font-size:26px;font-weight:900;margin-bottom:8px;}
+  .sec-sub{color:var(--ink-soft);font-size:14.5px;max-width:640px;margin-bottom:28px;}
+
+  /* CARDS GRID */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:760px){.grid3{grid-template-columns:1fr;} .grid2{grid-template-columns:1fr;}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;}
+  .card .emoji{font-size:26px;display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:13px;background:var(--teal-light);margin-bottom:12px;}
+  .card h3{font-size:15.5px;font-weight:800;margin-bottom:6px;}
+  .card p{font-size:13px;color:var(--ink-soft);margin:0;}
+
+  /* TABS */
+  .tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+  .tab-btn{padding:10px 18px;border-radius:12px;border:1px solid var(--line);background:var(--card);font-size:13.5px;font-weight:700;cursor:pointer;color:var(--ink);font-family:inherit;}
+  .tab-btn.active{background:var(--teal);color:#fff;border-color:var(--teal);}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+  /* JOURNEY STEPPER */
+  .journey{display:flex;flex-direction:column;gap:0;}
+  .step{display:flex;gap:14px;position:relative;padding-bottom:26px;}
+  .step:last-child{padding-bottom:0;}
+  .step-dot{width:34px;height:34px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13.5px;flex-shrink:0;z-index:1;}
+  .step:not(:last-child)::before{content:"";position:absolute;top:34px;right:17px;width:2px;height:calc(100% - 34px);background:var(--line);}
+  .step-body{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px;flex:1;}
+  .step-body b{font-size:13.5px;}
+  .step-body span{display:block;font-size:12.5px;color:var(--ink-soft);margin-top:3px;}
+
+  /* ACCORDION (screens) */
+  .accordion-item{border:1px solid var(--line);border-radius:16px;margin-bottom:10px;overflow:hidden;background:var(--card);}
+  .accordion-head{display:flex;align-items:center;gap:12px;padding:15px 16px;cursor:pointer;user-select:none;}
+  .accordion-head .num{width:30px;height:30px;border-radius:9px;background:var(--coral-light);color:var(--coral-deep);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;}
+  .accordion-head b{font-size:14.5px;flex:1;}
+  .chev{transition:.25s;font-size:14px;color:var(--ink-soft);}
+  .accordion-item.open .chev{transform:rotate(180deg);}
+  .accordion-body{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+  .accordion-item.open .accordion-body{max-height:220px;}
+  .accordion-body-inner{padding:0 16px 16px 16px;font-size:13px;color:var(--ink-soft);}
+
+  /* MATCH BARS */
+  .match-row{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .match-label{width:150px;font-size:13px;font-weight:700;flex-shrink:0;}
+  .match-track{flex:1;height:10px;background:var(--teal-light);border-radius:999px;overflow:hidden;}
+  .match-fill{height:100%;background:linear-gradient(90deg,var(--coral),var(--coral-deep));border-radius:999px;width:0;transition:width 1s ease;}
+  .match-pct{width:38px;text-align:left;font-size:12.5px;font-weight:800;color:var(--coral-deep);}
+
+  /* AR FLOW */
+  .flow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:10px;}
+  .flow-box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:12.5px;font-weight:700;text-align:center;min-width:110px;}
+  .flow-arrow{color:var(--coral-deep);font-size:16px;}
+
+  /* DB DIAGRAM */
+  .db-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  @media(max-width:760px){.db-grid{grid-template-columns:1fr 1fr;}}
+  .db-box{background:var(--teal-dark);color:#fff;border-radius:14px;padding:12px;font-size:11.5px;}
+  .db-box h4{font-size:13px;margin-bottom:6px;color:var(--coral);}
+  .db-box div{opacity:.85;line-height:1.9;}
+
+  /* TECH BADGES */
+  .badges{display:flex;flex-wrap:wrap;gap:8px;}
+  .tech-badge{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 14px;font-size:12.5px;font-weight:700;}
+
+  /* ROADMAP */
+  .roadmap{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;}
+  .phase{flex:1;min-width:190px;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:16px;cursor:pointer;transition:.2s;}
+  .phase.active{border-color:var(--coral);background:var(--coral-light);}
+  .phase .ph-num{font-size:11px;font-weight:800;color:var(--coral-deep);}
+  .phase h4{font-size:14px;margin:6px 0 8px;}
+  .phase ul{margin:0;padding-inline-start:16px;font-size:12px;color:var(--ink-soft);}
+
+  /* MVP TIERS */
+  .tier{border-radius:18px;padding:20px;margin-bottom:12px;cursor:pointer;}
+  .tier-1{background:var(--green-bg);border:2px solid var(--green);}
+  .tier-2{background:var(--amber-bg);border:2px solid var(--amber);}
+  .tier-3{background:var(--red-bg);border:2px dashed var(--red);}
+  .tier h4{font-size:15px;margin-bottom:6px;}
+  .tier-list{display:none;margin-top:10px;font-size:13px;}
+  .tier.open .tier-list{display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;}
+  .tier-list div::before{content:"• ";}
+
+  /* CHECKLIST */
+  .checklist div{display:flex;gap:10px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 16px;margin-bottom:8px;font-size:13.5px;}
+  .checklist span.n{background:var(--teal);color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;margin-top:1px;}
+
+  footer{text-align:center;padding:30px;color:var(--ink-soft);font-size:12px;}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-inner" id="navInner">
+    <span class="nav-pill" data-target="problem">المشكلة</span>
+    <span class="nav-pill" data-target="users">المستخدمون</span>
+    <span class="nav-pill" data-target="diff">التمايز</span>
+    <span class="nav-pill" data-target="screens">الشاشات</span>
+    <span class="nav-pill" data-target="ai">الذكاء الاصطناعي</span>
+    <span class="nav-pill" data-target="ar">AR</span>
+    <span class="nav-pill" data-target="db">قاعدة البيانات</span>
+    <span class="nav-pill" data-target="tech">التقنيات</span>
+    <span class="nav-pill" data-target="roadmap">خطة العمل</span>
+    <span class="nav-pill" data-target="mvp">MVP</span>
+    <span class="nav-pill" data-target="benefits">الفوائد</span>
+    <span class="nav-pill" data-target="reco">التوصيات</span>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>🔗 EventLink</h1>
+    <p>منصة اكتشاف ذكية توحّد بين استكشاف الأماكن السياحية وربط أصحاب المشاريع الصغيرة بالفعاليات المناسبة لهم.</p>
+    <div class="badge-row">
+      <span class="badge">🧠 مطابقة ذكية</span>
+      <span class="badge">📍 توصية بالأماكن</span>
+      <span class="badge">🕶️ ملاحة بالواقع المعزز</span>
+      <span class="badge">📱 مشروع تخرج</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- المشكلة -->
+  <section id="problem">
+    <span class="kicker">01 · المشكلة</span>
+    <h2 class="sec-title">ثلاث فئات، ثلاث مشاكل حقيقية</h2>
+    <p class="sec-sub">كل طرف يعاني بطريقته من غياب أداة موحّدة تربط بين الفرص والاحتياجات.</p>
+    <div class="grid3">
+      <div class="card">
+        <div class="emoji">🧑‍🍳</div>
+        <h3>أصحاب المشاريع الصغيرة</h3>
+        <p>يعتمدون على واتساب وحسابات التواصل والبحث اليدوي لمعرفة الفعاليات والأسواق المناسبة لهم.</p>
+      </div>
+      <div class="card">
+        <div class="emoji">🎪</div>
+        <h3>منظمو الفعاليات</h3>
+        <p>يواجهون صعوبة بالعثور على مشاريع مناسبة، ويحتاجون للتواصل مع كل مشروع بشكل منفصل.</p>
+      </div>
+      <div class="card">
+        <div class="emoji">🧭</div>
+        <h3>الزوار والسياح</h3>
+        <p>لا يعرفون حالة الازدحام أو الطقس أو أفضل وقت للزيارة إلا بالتجربة المباشرة.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- الحل + المستخدمون -->
+  <section id="users">
+    <span class="kicker">02 · الحل</span>
+    <h2 class="sec-title">منصة واحدة، ثلاث رحلات مستخدم</h2>
+    <p class="sec-sub">اضغط على أي نوع مستخدم لترى رحلته داخل التطبيق خطوة بخطوة.</p>
+    <div class="tabs" id="userTabs">
+      <button class="tab-btn active" data-tab="owner">🧑‍🍳 صاحب المشروع</button>
+      <button class="tab-btn" data-tab="organizer">🎪 منظم الفعالية</button>
+      <button class="tab-btn" data-tab="visitor">🧭 الزائر</button>
+    </div>
+
+    <div class="tab-panel active" data-panel="owner">
+      <div class="journey">
+        <div class="step"><div class="step-dot">1</div><div class="step-body"><b>إنشاء حساب للمشروع</b><span>تحديد التصنيف والموقع والفعاليات المفضلة</span></div></div>
+        <div class="step"><div class="step-dot">2</div><div class="step-body"><b>استكشاف الفعاليات المقترحة</b><span>مرتبة حسب نسبة التطابق مع المشروع</span></div></div>
+        <div class="step"><div class="step-dot">3</div><div class="step-body"><b>التقديم على فعالية</b><span>مباشرة من خلال المنصة بضغطة زر</span></div></div>
+        <div class="step"><div class="step-dot">4</div><div class="step-body"><b>متابعة حالة الطلب</b><span>قيد المراجعة / تم القبول / تم الرفض</span></div></div>
+        <div class="step"><div class="step-dot">5</div><div class="step-body"><b>استقبال إشعار فوري</b><span>عند تغيّر حالة الطلب</span></div></div>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-panel="organizer">
+      <div class="journey">
+        <div class="step"><div class="step-dot">1</div><div class="step-body"><b>إنشاء فعالية</b><span>الاسم، الوصف، الموقع، التاريخ، عدد الأكشاك</span></div></div>
+        <div class="step"><div class="step-dot">2</div><div class="step-body"><b>تحديد متطلبات المشاركين</b><span>أنواع المشاريع المطلوبة والميزانية</span></div></div>
+        <div class="step"><div class="step-dot">3</div><div class="step-body"><b>استقبال طلبات المشاركة</b><span>مرتبة تلقائيًا حسب نسبة التطابق</span></div></div>
+        <div class="step"><div class="step-dot">4</div><div class="step-body"><b>قبول أو رفض كل طلب</b><span>مع إشعار فوري لصاحب المشروع</span></div></div>
+        <div class="step"><div class="step-dot">5</div><div class="step-body"><b>إدارة المشاركين</b><span>حتى موعد الفعالية من لوحة تحكم واحدة</span></div></div>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-panel="visitor">
+      <div class="journey">
+        <div class="step"><div class="step-dot">1</div><div class="step-body"><b>فتح التطبيق</b><span>اختيار "أماكن سياحية" أو "فعاليات وأسواق"</span></div></div>
+        <div class="step"><div class="step-dot">2</div><div class="step-body"><b>رؤية توصية ذكية فورية</b><span>أفضل مكان أو فعالية الآن بناءً على الازدحام والطقس</span></div></div>
+        <div class="step"><div class="step-dot">3</div><div class="step-body"><b>فتح التفاصيل</b><span>الازدحام، أفضل وقت، المشاريع المشاركة</span></div></div>
+        <div class="step"><div class="step-dot">4</div><div class="step-body"><b>حفظ أو استقبال تذكير</b><span>ليعود لاحقًا في الوقت الأنسب</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- التمايز -->
+  <section id="diff">
+    <span class="kicker">03 · لماذا مختلف</span>
+    <h2 class="sec-title">عناصر التمايز</h2>
+    <p class="sec-sub">النقاط التي تجعل EventLink أكثر من مجرد "قائمة أماكن" أو "قائمة فعاليات".</p>
+    <div class="grid3">
+      <div class="card"><div class="emoji">🔮</div><h3>توصية تنبؤية لا وصفية</h3><p>"بعد ساعتين سيصبح المكان أقل ازدحامًا" — بدل عرض الرقم فقط.</p></div>
+      <div class="card"><div class="emoji">🔁</div><h3>مطابقة ثنائية الاتجاه</h3><p>المنظم يقدر يرشّح مشاريع بنفسه، مو بس ينتظر من يقدّم.</p></div>
+      <div class="card"><div class="emoji">🏅</div><h3>نظام ثقة بالأداء الفعلي</h3><p>مؤشر مبني على نسبة إتمام المشاركات وتقييمات حقيقية.</p></div>
+      <div class="card"><div class="emoji">📊</div><h3>التنبؤ بالطلب</h3><p>مساعدة المنظم بتقدير عدد الأكشاك المطلوبة لكل فئة.</p></div>
+      <div class="card"><div class="emoji">🧠</div><h3>محرك ذكاء واحد لغرضين</h3><p>نفس منطق التوصية يخدم الأماكن والفعاليات معًا.</p></div>
+      <div class="card"><div class="emoji">🕶️</div><h3>ملاحة بالواقع المعزز</h3><p>إثبات مفهوم تقني نادر في مشاريع التخرج.</p></div>
+    </div>
+  </section>
+
+  <!-- الشاشات -->
+  <section id="screens">
+    <span class="kicker">04 · الشاشات</span>
+    <h2 class="sec-title">الشاشات والميزات الرئيسية</h2>
+    <p class="sec-sub">اضغط على أي شاشة لعرض تفاصيلها.</p>
+    <div id="accordion"></div>
+  </section>
+
+  <!-- الذكاء الاصطناعي -->
+  <section id="ai">
+    <span class="kicker">05 · الذكاء الاصطناعي</span>
+    <h2 class="sec-title">خوارزمية المطابقة والتوصية الذكية</h2>
+    <p class="sec-sub">مثال حي: نسبة تطابق "عربة قهوة الساحل" مع مهرجان جدة الشتوي، حسب كل معيار.</p>
+    <div class="card">
+      <div id="matchBars"></div>
+    </div>
+    <div class="grid2" style="margin-top:14px;">
+      <div class="card"><div class="emoji">🌤️</div><h3>التوصية بالأماكن</h3><p>تحليل الازدحام والطقس والوقت الحالي لإعطاء توصية مباشرة: اذهب الآن، أو انتظر.</p></div>
+      <div class="card"><div class="emoji">⏱️</div><h3>التنبؤ المستقبلي</h3><p>"بعد ساعتين سيصبح المكان أقل ازدحامًا" — مساعد ذكي لا مجرد خريطة سياحية.</p></div>
+    </div>
+  </section>
+
+  <!-- AR -->
+  <section id="ar">
+    <span class="kicker">06 · ميزة إضافية</span>
+    <h2 class="sec-title">الملاحة بالواقع المعزز (AR Navigation)</h2>
+    <p class="sec-sub">سهم يظهر فوق الكاميرا الحقيقية يوجه المستخدم نحو المكان أو الفعالية.</p>
+    <div class="card">
+      <div class="flow">
+        <div class="flow-box">📍 تحديد موقع المستخدم</div><span class="flow-arrow">←</span>
+        <div class="flow-box">🎯 إحداثيات الوجهة</div><span class="flow-arrow">←</span>
+        <div class="flow-box">🧭 حساب الاتجاه والمسافة</div><span class="flow-arrow">←</span>
+        <div class="flow-box">📷 فتح الكاميرا</div><span class="flow-arrow">←</span>
+        <div class="flow-box">➡️ عرض السهم فوق الكاميرا</div>
+      </div>
+      <p style="font-size:12.5px;color:var(--ink-soft);margin-top:16px;">
+        التقنية المقترحة: <b>AR.js / WebXR</b> — تعمل داخل المتصفح مباشرة دون تطبيق منفصل، وتُطوَّر كإثبات مفهوم على مكان واحد ضمن مرحلة الخصائص الذكية.
+      </p>
+    </div>
+  </section>
+
+  <!-- قاعدة البيانات -->
+  <section id="db">
+    <span class="kicker">07 · البنية التقنية</span>
+    <h2 class="sec-title">قاعدة البيانات</h2>
+    <p class="sec-sub">الجداول الأساسية المقترحة وأعمدتها.</p>
+    <div class="db-grid" id="dbGrid"></div>
+  </section>
+
+  <!-- التقنيات -->
+  <section id="tech">
+    <span class="kicker">08 · التقنيات</span>
+    <h2 class="sec-title">التقنيات المقترحة</h2>
+    <div class="badges" id="techBadges"></div>
+  </section>
+
+  <!-- خطة العمل -->
+  <section id="roadmap">
+    <span class="kicker">09 · خطة العمل</span>
+    <h2 class="sec-title">مراحل التنفيذ</h2>
+    <p class="sec-sub">اضغط على كل مرحلة لعرض تفاصيلها.</p>
+    <div class="roadmap" id="roadmapWrap"></div>
+  </section>
+
+  <!-- MVP -->
+  <section id="mvp">
+    <span class="kicker">10 · النطاق</span>
+    <h2 class="sec-title">نطاق النسخة الأساسية (MVP)</h2>
+    <p class="sec-sub">حتى لا يصبح المشروع ضخمًا جدًا — اضغط على كل مستوى لعرض تفاصيله.</p>
+    <div id="tiers"></div>
+  </section>
+
+  <!-- الفوائد -->
+  <section id="benefits">
+    <span class="kicker">11 · الفوائد</span>
+    <h2 class="sec-title">فوائد المشروع لكل طرف</h2>
+    <div class="tabs" id="benefitTabs">
+      <button class="tab-btn active" data-tab="b1">🧑‍🍳 أصحاب المشاريع</button>
+      <button class="tab-btn" data-tab="b2">🎪 منظمو الفعاليات</button>
+      <button class="tab-btn" data-tab="b3">🧭 الزوار</button>
+    </div>
+    <div class="tab-panel active" data-panel="b1"><div class="card"><p>اكتشاف فرص جديدة · زيادة الوصول للعملاء · الوصول لفعاليات مناسبة · تقليل وقت البحث · سهولة التقديم</p></div></div>
+    <div class="tab-panel" data-panel="b2"><div class="card"><p>الوصول إلى مشاريع مناسبة · تقليل الوقت والجهد · إدارة طلبات المشاركة · تنظيم المشاركين</p></div></div>
+    <div class="tab-panel" data-panel="b3"><div class="card"><p>اكتشاف الفعاليات والأماكن · معرفة المشاريع المشاركة · التخطيط الأفضل للزيارة</p></div></div>
+  </section>
+
+  <!-- التوصيات -->
+  <section id="reco">
+    <span class="kicker">12 · الخطوات القادمة</span>
+    <h2 class="sec-title">التوصيات</h2>
+    <div class="checklist" id="checklist"></div>
+  </section>
+
+</div>
+
+<footer>EventLink — خطة مشروع تخرج · سبتمبر 2026</footer>
+
+<script>
+// ===== Nav highlighting + smooth scroll =====
+const pills = document.querySelectorAll('.nav-pill');
+pills.forEach(pill => {
+  pill.addEventListener('click', () => {
+    document.getElementById(pill.dataset.target).scrollIntoView({behavior:'smooth', block:'start'});
+  });
+});
+const sections = document.querySelectorAll('section');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      pills.forEach(p => p.classList.toggle('active', p.dataset.target === e.target.id));
+    }
+  });
+}, {rootMargin:"-40% 0px -50% 0px"});
+sections.forEach(s => io.observe(s));
+
+// ===== Generic tabs =====
+document.querySelectorAll('.tabs').forEach(tabGroup => {
+  const btns = tabGroup.querySelectorAll('.tab-btn');
+  const container = tabGroup.parentElement;
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      container.querySelectorAll(':scope > .tab-panel').forEach(p => {
+        p.classList.toggle('active', p.dataset.panel === btn.dataset.tab);
+      });
+    });
+  });
+});
+
+// ===== Accordion: screens =====
+const screens = [
+  ["🔍","شاشة الاستكشاف","تبويبان: أماكن سياحية وفعاليات، بحث وفلاتر (الموقع، التصنيف، التاريخ)، وبطاقة توصية ذكية أعلى الصفحة."],
+  ["📍","تفاصيل المكان السياحي","الحرارة، الطقس، الازدحام، عدد الزوار، التقييم، أفضل وقت للزيارة، وتوصية مباشرة."],
+  ["🎪","تفاصيل الفعالية والتقديم","الموقع، التاريخ، عدد الزوار المتوقع، نسبة التطابق، الفئات المطلوبة، وزر تقديم مباشر."],
+  ["📊","لوحة تحكم صاحب المشروع","إحصائيات سريعة، فعاليات مقترحة مرتبة حسب التطابق، وحالة كل طلب."],
+  ["🏛️","لوحة تحكم منظم الفعالية","عدد الفعاليات، طلبات المشاركة الواردة، إنشاء فعالية وتحديد متطلباتها."],
+  ["🛠️","لوحة تحكم المسؤول","إدارة المستخدمين والمشاريع والفعاليات والتصنيفات، ومتابعة البلاغات والإحصائيات العامة."],
+  ["🔔","نظام الإشعارات","فعالية جديدة تناسب مشروعك، قبول/رفض الطلب، اقتراب موعد التقديم، وغيرها."],
+];
+const accWrap = document.getElementById('accordion');
+screens.forEach(([icon,title,desc], i) => {
+  const item = document.createElement('div');
+  item.className = 'accordion-item';
+  item.innerHTML = `
+    <div class="accordion-head">
+      <div class="num">${icon}</div>
+      <b>${title}</b>
+      <span class="chev">▾</span>
+    </div>
+    <div class="accordion-body"><div class="accordion-body-inner">${desc}</div></div>`;
+  item.querySelector('.accordion-head').addEventListener('click', () => item.classList.toggle('open'));
+  accWrap.appendChild(item);
+});
+
+// ===== Match bars (animate on scroll into view) =====
+const matches = [
+  ["الموقع", 100],
+  ["نوع المشروع", 95],
+  ["نوع الفعالية", 90],
+  ["التوفر بالتاريخ", 100],
+  ["الميزانية", 92],
+];
+const matchWrap = document.getElementById('matchBars');
+matches.forEach(([label, pct]) => {
+  const row = document.createElement('div');
+  row.className = 'match-row';
+  row.innerHTML = `<div class="match-label">${label}</div><div class="match-track"><div class="match-fill" data-pct="${pct}"></div></div><div class="match-pct">${pct}%</div>`;
+  matchWrap.appendChild(row);
+});
+const aiSection = document.getElementById('ai');
+const aiObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      document.querySelectorAll('.match-fill').forEach(f => f.style.width = f.dataset.pct + '%');
+      aiObserver.disconnect();
+    }
+  });
+}, {threshold:0.3});
+aiObserver.observe(aiSection);
+
+// ===== DB grid =====
+const dbTables = [
+  ["Users","UserID, Name, Email, Password, Role"],
+  ["Businesses","BusinessID, UserID, BusinessName, Category, Location"],
+  ["Events","EventID, OrganizerID, EventName, Date, ExpectedVisitors"],
+  ["Applications","ApplicationID, BusinessID, EventID, Status"],
+  ["Products","ProductID, BusinessID, ProductName, Price"],
+  ["Notifications","NotificationID, UserID, EventID, Message"],
+  ["Reviews","ReviewID, UserID, BusinessID, Rating"],
+  ["Places","PlaceID, Name, Category, CrowdLevel, Weather"],
+];
+const dbGrid = document.getElementById('dbGrid');
+dbTables.forEach(([name, cols]) => {
+  const box = document.createElement('div');
+  box.className = 'db-box';
+  box.innerHTML = `<h4>${name}</h4><div>${cols}</div>`;
+  dbGrid.appendChild(box);
+});
+
+// ===== Tech badges =====
+const techs = ["HTML5","CSS3","JavaScript","Node.js","Express.js","MySQL","Git","GitHub","Figma","AR.js / WebXR"];
+const techWrap = document.getElementById('techBadges');
+techs.forEach(t => {
+  const b = document.createElement('span');
+  b.className = 'tech-badge';
+  b.textContent = t;
+  techWrap.appendChild(b);
+});
+
+// ===== Roadmap =====
+const phases = [
+  ["المرحلة 3","التطوير", ["Frontend","Backend","Database","Authentication"]],
+  ["المرحلة 4","الخصائص الذكية", ["Matching Algorithm","Notifications","Search & Filtering","AR Navigation (POC)"]],
+  ["المرحلة 5","الاختبار", ["Functional Testing","Usability Testing","Security Testing"]],
+  ["المرحلة 6","التسليم", ["Deployment","Documentation","Presentation"]],
+];
+const roadmapWrap = document.getElementById('roadmapWrap');
+phases.forEach(([num,title,items], i) => {
+  const el = document.createElement('div');
+  el.className = 'phase' + (i===0 ? ' active' : '');
+  el.innerHTML = `<div class="ph-num">${num}</div><h4>${title}</h4><ul>${items.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+  el.addEventListener('click', () => el.classList.toggle('active'));
+  roadmapWrap.appendChild(el);
+});
+
+// ===== MVP tiers =====
+const tiers = [
+  ["tier-1","🟢 أساسي","الميزات التي لا يقوم المشروع بدونها", ["تسجيل الدخول وإنشاء الحساب","ملفات المشاريع والمنظمين","إنشاء الفعاليات واستكشافها","البحث والتصفية","التقديم وإدارة الطلبات","نظام المطابقة الذكي","الإشعارات","لوحة تحكم Admin","قاعدة بيانات MySQL"]],
+  ["tier-2","🟡 إضافات","تُضاف بعد استقرار الأساسي", ["الخرائط","التقييمات","الإحصائيات","الرسائل"]],
+  ["tier-3","🔴 تطوير مستقبلي","خارج نطاق التخرج حاليًا", ["AI Recommendation المتقدم","الدفع الإلكتروني","Chatbot","التنبؤ بعدد الزوار","AR Navigation الكاملة"]],
+];
+const tierWrap = document.getElementById('tiers');
+tiers.forEach(([cls,title,sub,items], i) => {
+  const el = document.createElement('div');
+  el.className = 'tier ' + cls + (i===0?' open':'');
+  el.innerHTML = `<h4>${title}</h4><div style="font-size:12.5px;color:var(--ink-soft);">${sub}</div><div class="tier-list">${items.map(x=>`<div>${x}</div>`).join('')}</div>`;
+  el.addEventListener('click', () => el.classList.toggle('open'));
+  tierWrap.appendChild(el);
+});
+
+// ===== Checklist =====
+const recos = [
+  "البدء بتطوير النطاق الأساسي (MVP) فقط، وتأجيل الدفع الإلكتروني والميزات المتقدمة.",
+  "بناء نموذج أولي شغال للشاشات الرئيسية قبل البرمجة الكاملة، لاختباره مع مستخدمين حقيقيين.",
+  "توثيق منطق خوارزمية المطابقة رياضيًا بشكل واضح لعرضه أمام لجنة المناقشة.",
+  "تطوير نموذج واحد شغال فعليًا لميزة AR كإثبات مفهوم، بدل تغطية شاملة.",
+  "إجراء دراسة مقارنة مختصرة مع منصات مشابهة لتوضيح نقاط التمايز.",
+];
+const checklistWrap = document.getElementById('checklist');
+recos.forEach((text, i) => {
+  const div = document.createElement('div');
+  div.innerHTML = `<span class="n">${i+1}</span><span>${text}</span>`;
+  checklistWrap.appendChild(div);
+});
+</script>
+</body>
+</html>
